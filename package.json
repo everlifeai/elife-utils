@@ -1,0 +1,9 @@
+{
+  "name": "elife-utils",
+  "version": "0.1.0",
+  "description": "Utils/Helpers",
+  "main": "index.js",
+  "repository": "https://github.com/everlifeai/elife-utils.git",
+  "author": "charles.lobo@gmail.com",
+  "license": "MIT"
+}
