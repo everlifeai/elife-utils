@@ -9,6 +9,7 @@ module.exports = {
     showErr: showErr,
     ensureExists: ensureExists,
     getIPs: getIPs,
+    toStr: toStr,
 }
 
 /*      outcome/
