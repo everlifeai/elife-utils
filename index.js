@@ -10,6 +10,7 @@ module.exports = {
     ensureExists: ensureExists,
     getIPs: getIPs,
     toStr: toStr,
+    shallowClone: shallowClone,
 }
 
 /*      outcome/
@@ -78,3 +79,17 @@ function getIPs() {
     })
     return ip4s.concat(ip6s)
 }
+
+/*      outcome/
+ * Make a simple, quick, shallow clone of the given object.
+ */
+function shallowClone(obj) {
+    let ret = {}
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            ret[key] = obj[key];
+        }
+    }
+    return ret;
+}
+
