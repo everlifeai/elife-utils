@@ -32,6 +32,7 @@ function showErr(err) {
  * present).
  */
 function toStr(obj) {
+    if(!obj) return obj;
     if(typeof obj === "string") return obj;
     var m = util.inspect(obj, {depth:null});
     if(obj.stack) m += obj.stack;
