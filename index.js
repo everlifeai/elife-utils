@@ -5,6 +5,8 @@ const path = require('path')
 const util = require('util')
 
 module.exports = {
+    dataLoc: dataLoc,
+    skillLoc: skillLoc,
     showMsg: showMsg,
     showErr: showErr,
     ensureExists: ensureExists,
@@ -98,3 +100,18 @@ function shallowClone(obj) {
     return ret;
 }
 
+/*      outcome/
+ * Returns the standard data location for EverlifeAI Avatar
+ * NB: THE ENVIRONMENT VARIABLE ELIFE_HOME MUST BE SET
+ */
+function dataLoc() {
+    return path.join(process.env.ELIFE_HOME, "data")
+}
+
+/*      outcome/
+ * Returns the standard user skill location for EverlifeAI Avatar
+ * NB: THE ENVIRONMENT VARIABLE ELIFE_HOME MUST BE SET
+ */
+function skillLoc() {
+    return path.join(process.env.ELIFE_HOME, "skills")
+}
