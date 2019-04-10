@@ -5,6 +5,9 @@ const path = require('path')
 const util = require('util')
 
 module.exports = {
+    nodeNum: nodeNum,
+    adjustPort: adjustPort,
+    homeLoc: homeLoc,
     dataLoc: dataLoc,
     skillLoc: skillLoc,
     showMsg: showMsg,
@@ -100,18 +103,85 @@ function shallowClone(obj) {
     return ret;
 }
 
+
+/*      problem/
+ * We need to find a location where we can store elife data and
+ * downloaded skills. This location needs to support multiple nodes
+ * because (especially for development) we do need to run multiple nodes
+ * on the same machine without them stepping on each other's toes.
+ *
+ *      way/
+ * Most operating systems provide a location for application data. We
+ * will use such a location unless the user has specified (via
+ * environment variable) as the location for ELIFE_HOME
+ *      Windows: C:\Users\<user>\AppData\Local\everlifeai\
+ *      Mac: ~/everlifeai/
+ *      Linux: ~/everlifeai/
+ * We will use the %APPDATA% (windows) enviroment variable and the $HOME
+ * (Mac/Linux) environment variable to find these locations.
+ *
+ * Now in order to support multiple nodes on the same machine, we will
+ * append a "node number" to this. Most machines will only have the
+ * first node but additional nodes will now be possible:
+ *
+ *      %APPDATA%\Local\everlifeai\0\...
+ *      %$HOME\everlifeai\2\...
+ */
+function homeLoc() {
+    if(process.env.ELIFE_HOME) return process.env.ELIFE_HOME
+
+    let num = nodeNum()
+    let root = process.env.APPDATA
+    if(root) {
+        root = path.join(root, "Local", "everlifeai", num.toString())
+    } else {
+        root = process.env.HOME
+        root = path.join(root, "everlifeai", num.toString())
+    }
+
+    return root
+}
+
+/*      outcome/
+ * Check if the user has specified ELIFE_NODE_NUM and use that number
+ * otherwise return zero.
+ */
+function nodeNum() {
+    let num = process.env.ELIFE_NODE_NUM
+    if(num) {
+        num = parseInt(num)
+        if(isNaN(num)) {
+            showErr("Environment variable ELIFE_NODE_NUM is not a valid number")
+            return 0
+        }
+    } else {
+        num = 0
+    }
+    return num
+}
+
+
 /*      outcome/
  * Returns the standard data location for EverlifeAI Avatar
- * NB: THE ENVIRONMENT VARIABLE ELIFE_HOME MUST BE SET
  */
 function dataLoc() {
-    return path.join(process.env.ELIFE_HOME, "data")
+    return path.join(homeLoc(), "data")
 }
 
 /*      outcome/
  * Returns the standard user skill location for EverlifeAI Avatar
- * NB: THE ENVIRONMENT VARIABLE ELIFE_HOME MUST BE SET
  */
 function skillLoc() {
-    return path.join(process.env.ELIFE_HOME, "skills")
+    return path.join(homeLoc(), "skills")
+}
+
+/*      outcome/
+ * We adjust the given port by offsetting it based on the avatar node
+ * number to allow multiple nodes to live on the same machine without
+ * interfering with each other.
+ */
+function adjustPort(p) {
+    let num = nodeNum()
+    p += num * 100
+    return p.toString()
 }
