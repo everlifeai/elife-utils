@@ -108,7 +108,9 @@ function shallowClone(obj) {
  * We need to find a location where we can store elife data and
  * downloaded skills. This location needs to support multiple nodes
  * because (especially for development) we do need to run multiple nodes
- * on the same machine without them stepping on each other's toes.
+ * on the same machine without them stepping on each other's toes. We
+ * also need to support 'organization-specific' locations for per-org
+ * deployments.
  *
  *      way/
  * Most operating systems provide a location for application data. We
@@ -125,21 +127,35 @@ function shallowClone(obj) {
  * first node but additional nodes will now be possible:
  *
  *      %APPDATA%\Local\everlifeai\0\...
- *      %$HOME\everlifeai\2\...
+ *      $HOME\everlifeai\2\...
+ *
+ * Finally we support org-specific locations by using an ORG identifier:
+ *
+ *      %APPDATA%\Local\everlifeai\microsoft.com\0\...
+ *      $HOME\everlifeai\microsoft.com\2\...
  */
 function homeLoc() {
     if(process.env.ELIFE_HOME) return process.env.ELIFE_HOME
 
     let num = nodeNum()
+    let org = orgID()
     let root = process.env.APPDATA
     if(root) {
-        root = path.join(root, "Local", "everlifeai", "salesboxai", num.toString())
+        root = path.join(root, "Local")
     } else {
         root = process.env.HOME
-        root = path.join(root, "everlifeai", "salesboxai", num.toString())
     }
+    return path.join(root, "everlifeai", org, num.toString())
+}
 
-    return root
+/*      outcome/
+ * If the user has specified an ELIFE_NODE_ORG we set that otherwise we
+ * return an empty string.
+ */
+function orgID() {
+    let org = process.env.ELIFE_NODE_ORG
+    if(org) return org
+    return ""
 }
 
 /*      outcome/
