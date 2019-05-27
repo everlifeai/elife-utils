@@ -133,10 +133,10 @@ function homeLoc() {
     let num = nodeNum()
     let root = process.env.APPDATA
     if(root) {
-        root = path.join(root, "Local", "everlifeai", num.toString())
+        root = path.join(root, "Local", "everlifeai", "salesboxai", num.toString())
     } else {
         root = process.env.HOME
-        root = path.join(root, "everlifeai", num.toString())
+        root = path.join(root, "everlifeai", "salesboxai", num.toString())
     }
 
     return root
