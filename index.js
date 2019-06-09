@@ -201,11 +201,20 @@ function logsLoc() {
 
 /*      outcome/
  * We adjust the given port by offsetting it based on the avatar node
- * number to allow multiple nodes to live on the same machine without
- * interfering with each other.
+ * number and any org port offset to allow multiple nodes to live on the
+ * same machine without interfering with each other.
  */
 function adjustPort(p) {
     let num = nodeNum()
     p += num * 100
+    let adj = process.env.ELIFE_ORG_PORT_OFFSET
+    if(adj) {
+        adj = parseInt(adj)
+        if(isNaN(adj)) {
+            showErr("Environment variable ELIFE_ORG_PORT_OFFSET is not a valid number")
+        } else {
+            p += adj * 1000
+        }
+    }
     return p.toString()
 }
