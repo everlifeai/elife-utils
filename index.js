@@ -10,6 +10,7 @@ module.exports = {
     homeLoc: homeLoc,
     dataLoc: dataLoc,
     skillLoc: skillLoc,
+    logsLoc: logsLoc,
     showMsg: showMsg,
     showErr: showErr,
     ensureExists: ensureExists,
@@ -189,6 +190,13 @@ function dataLoc() {
  */
 function skillLoc() {
     return path.join(homeLoc(), "skills")
+}
+
+/*      outcome/
+ * Returns the standard logs directory location for EverlifeAI Avatar
+ */
+function logsLoc() {
+    return path.join(homeLoc(), "logs")
 }
 
 /*      outcome/
