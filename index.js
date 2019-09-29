@@ -14,6 +14,7 @@ module.exports = {
     showMsg: showMsg,
     showErr: showErr,
     ensureExists: ensureExists,
+    rmdir: rmdir,
     getIPs: getIPs,
     toStr: toStr,
     shallowClone: shallowClone,
@@ -71,6 +72,32 @@ function ensureExists(path_, cb) {
                 else ensure_exists_1(p, upto+1)
             })
         }
+    }
+}
+
+/*      outcome/
+ * Recursively remove the given directory and all sub-directories
+ */
+function rmdir(loc, cb) {
+    try {
+        rmdir_1(loc)
+        cb()
+    } catch(e) {
+        cb(e)
+    }
+
+    function rmdir_1(loc) {
+        let files = fs.readdirSync(loc, { withFileTypes: true })
+        for(let i = 0;i < files.length;i++) {
+            let file = files[i]
+            let name = path.join(loc, file.name)
+            if(file.isDirectory()) {
+                rmdir_1(name)
+            } else {
+                fs.unlinkSync(name)
+            }
+        }
+        fs.rmdirSync(loc)
     }
 }
 
