@@ -1,5 +1,5 @@
 {
-  "name": "elife-utils",
+  "name": "@elife/utils",
   "version": "2.0.0",
   "description": "Utils/Helpers",
   "main": "index.js",
