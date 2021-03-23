@@ -1,6 +1,6 @@
 {
   "name": "@elife/utils",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Utils/Helpers for the Everlife.AI project",
   "main": "index.js",
   "repository": "https://github.com/everlifeai/elife-utils.git",
