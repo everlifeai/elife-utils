@@ -9,6 +9,7 @@ module.exports = {
     adjustPort: adjustPort,
     homeLoc: homeLoc,
     dataLoc: dataLoc,
+    ssbLoc: ssbLoc,
     skillLoc: skillLoc,
     logsLoc: logsLoc,
     showMsg: showMsg,
@@ -210,6 +211,13 @@ function nodeNum() {
  */
 function dataLoc() {
     return path.join(homeLoc(), "data")
+}
+
+/*      outcome/
+ * Returns the directory location for SSB blockchain
+ */
+function ssbLoc() {
+    return path.join(dataLoc(), "__ssb")
 }
 
 /*      outcome/
