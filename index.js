@@ -10,6 +10,7 @@ module.exports = {
     homeLoc: homeLoc,
     dataLoc: dataLoc,
     ssbLoc: ssbLoc,
+    faceImgLoc: faceImgLoc,
     skillLoc: skillLoc,
     logsLoc: logsLoc,
     showMsg: showMsg,
@@ -218,6 +219,13 @@ function dataLoc() {
  */
 function ssbLoc() {
     return path.join(dataLoc(), "__ssb")
+}
+
+/*      outcome/
+ * Returns the directory location for SSB blockchain
+ */
+function faceImgLoc() {
+    return path.join(dataLoc(), "face")
 }
 
 /*      outcome/
