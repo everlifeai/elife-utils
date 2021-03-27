@@ -13,6 +13,7 @@ module.exports = {
     faceImgLoc: faceImgLoc,
     skillLoc: skillLoc,
     logsLoc: logsLoc,
+    secretFile: secretFile,
     showMsg: showMsg,
     showErr: showErr,
     ensureExists: ensureExists,
@@ -240,6 +241,13 @@ function skillLoc() {
  */
 function logsLoc() {
     return path.join(homeLoc(), "logs")
+}
+
+/*      outcome/
+ * Returns the location for secret file used by both us and SSB
+ */
+function secretFile() {
+    return path.join(ssbLoc(), "secret")
 }
 
 /*      outcome/
